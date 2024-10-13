@@ -1,0 +1,32 @@
+This pipeline involves using a Large Language Model (LLM) and data processing tools to generate responses based on a user's query. Here's how it works:
+
+### 1. **Input Query**
+   - **query_str**: This is the initial question or query that the user inputs. For example, "What was the average sales in Q1?"
+
+### 2. **Pandas Prompt**
+   - **pandas_prompt**: This is where the query is rephrased or adjusted to work well with a tool called Pandas. Pandas is a powerful data manipulation library in Python, commonly used for data analysis. The prompt here might turn the query into something like, "Calculate the average sales for Q1 using the dataset."
+
+### 3. **LLM1**
+   - **llm1**: This stands for the first Large Language Model. This model takes the pandas_prompt and generates instructions or code that can be used by Pandas to perform the desired data analysis. For example, LLM1 might generate Python code that says, `df[df['quarter'] == 'Q1']['sales'].mean()`.
+
+### 4. **Pandas Output Parser**
+   - **pandas_output_parser**: After LLM1 generates the instructions, these instructions are run in Pandas, and the result is parsed (or read) by this component. The parser takes the output (e.g., the average sales value) and formats it in a way that's easy to understand.
+
+### 5. **Response Synthesis Prompt**
+   - **response_synthesis_prompt**: This is where the different pieces of information come together. The prompt here might combine the original query, the instructions from LLM1, and the Pandas output into a final response. For example, it might turn everything into a coherent answer like, "The average sales in Q1 were $500,000."
+
+### 6. **LLM2**
+   - **llm2**: The second Large Language Model takes the response_synthesis_prompt and generates the final, user-friendly response. This model ensures that the response is clear, concise, and directly answers the original query.
+
+### **Additional Connections**
+   - **llm1 -> pandas_instructions**: The first LLM generates the actual code or instructions that Pandas will execute.
+   - **pandas_output_parser -> pandas_output**: The parser reads the results from Pandas and prepares them for the final response.
+
+### **Overall Flow**
+1. **User Input**: A user asks a question.
+2. **Rephrasing**: The question is adapted for a data processing tool.
+3. **Code Generation**: The first LLM creates instructions for how to analyze the data.
+4. **Execution and Parsing**: The instructions are executed, and the results are formatted.
+5. **Final Response**: The second LLM generates a complete, understandable answer for the user.
+
+This pipeline is useful in situations where a user might ask a question that requires both natural language understanding and data analysis, leveraging both AI and traditional data processing tools.
